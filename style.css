@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+body{
+    margin: auto;
+    border-style: dotted;
+
+}
+
+header {
+}
