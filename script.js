@@ -43,6 +43,7 @@ function timer() {
     if (timeLeft === 0) {
       clearInterval(countDown);
       timerEl.textContent = "";
+      alert("Sorry you have run out of time");
     }
   }, 1000);
 }
@@ -52,8 +53,7 @@ function quiz() {
   var option2 = document.getElementById("b2");
   var option3 = document.getElementById("b3");
   var option4 = document.getElementById("b4");
-  document.getElementById("questions").textContent =
-    questionsArray[index].question;
+  document.getElementById("questions").textContent = questionsArray[index].question;
   option1.textContent = questionsArray[index].answers[0];
   option2.textContent = questionsArray[index].answers[1];
   option3.textContent = questionsArray[index].answers[2];
@@ -66,28 +66,28 @@ function quiz() {
   submit.addEventListener("click", keepScore);
 }
 
-function checkAnswer(event) {
-  console.log(this);
-  // console.log(event.target.innerText);
-  var chosenAnswer = this.textContent;
-  console.log(chosenAnswer, questionsArray[index].correct);
-  if (chosenAnswer === questionsArray[index].correct) {
-  } else {
-    timeLeft -= 15;
-  }
+function checkAnswer() {
+    console.log(this);
+    var chosenAnswer = this.textContent;
+    console.log(chosenAnswer, questionsArray[index].correct);
+    if (chosenAnswer === questionsArray[index].correct) {
+        score++;
+        localStorage.setItem("score", score);
+        document.getElementById("high-score").textContent = "High Scores:" + score;
+    } else {
+        timeLeft -= 15;
+    }
 }
-function keepScore() {
-  var score = parseInt(localStorage.getItem("score")) || 0;
-  if (score === checkAnswer) {
-    score++;
-    localStorage.setItem("score", score);
-    console.log(score);
-  }
-}
-keepScore();
+// function keepScore() {
+//   if (chosenAnswer === questionsArray[index].correct) {
+//     score++;
+//     localStorage.setItem("score", score);
+//     document.getElementById("high-score").textContent = "High Scores:" + score;
+//     console.log(score);
+//   }
+// }
+// keepScore();
 
-function displayHighScore() {}
-displayHighScore;
 
 next.addEventListener("click", function () {
   if (index < questionsArray.length - 1) index++;
@@ -104,5 +104,4 @@ start.addEventListener("click", function () {
   quiz();
 });
 submit.addEventListener("click", function () {
-  displayHighScore();
 });
